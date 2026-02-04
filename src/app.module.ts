@@ -11,7 +11,7 @@ import { LibraryModule } from './library/library.module';
 import { ProjectModule } from './project/project.module';
 import { EmployeeModule } from './employee/employee.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-console.log(process.env.DATABASE_URL);
+import { StudentModule } from './student/student.module';
 
 @Module({
   imports: [
@@ -28,6 +28,7 @@ console.log(process.env.DATABASE_URL);
     LibraryModule,
     ProjectModule,
     EmployeeModule,
+    StudentModule,
   ],
   controllers: [AppController, ExceptionController],
   providers: [AppService],
