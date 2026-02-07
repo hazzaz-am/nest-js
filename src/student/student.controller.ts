@@ -6,11 +6,13 @@ import {
   Param,
   Post,
   Put,
-} from '@nestjs/common';
-import { StudentService } from './student.service';
-import { Student } from './student.entity';
+  UseGuards,
+} from "@nestjs/common";
+import { StudentService } from "./student.service";
+import { Student } from "./student.entity";
+import { SupabaseAuthGuard } from "src/auth/supabase-auth/supabase-auth.guard";
 
-@Controller('student')
+@Controller("student")
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
@@ -19,27 +21,28 @@ export class StudentController {
     return this.studentService.createStudent(data);
   }
 
+  @UseGuards(SupabaseAuthGuard)
   @Get()
   async getAllStudents(): Promise<Student[]> {
     return this.studentService.getAllStudents();
   }
 
-  @Get(':id')
-  async getStudentById(@Param('id') id: number): Promise<Student> {
+  @Get(":id")
+  async getStudentById(@Param("id") id: number): Promise<Student> {
     return this.studentService.getStudentById(id);
   }
 
-  @Put(':id')
+  @Put(":id")
   async updateStudentById(
-    @Param('id') id: number,
+    @Param("id") id: number,
     @Body() data: Partial<Student>,
   ): Promise<Student> {
     return this.studentService.updateStudentById(id, data);
   }
 
-  @Delete(':id')
+  @Delete(":id")
   async deleteStudentById(
-    @Param('id') id: number,
+    @Param("id") id: number,
   ): Promise<{ message: string }> {
     return this.studentService.deleteStudentById(id);
   }
